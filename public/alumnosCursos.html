@@ -20,13 +20,62 @@
                     <th>Estado</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="cuerpo-tabla">
 
             </tbody>
         </table>
     </main>
     <footer></footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", async (event) => {
+            try {
+                fetch("/getAlumnosCursos") // Llamada a la API
+                    .then(response => response.json())
+                    .then(filas => {
 
+
+                        const cuerpoTabla = document.getElementById("cuerpo-tabla");
+                        cuerpoTabla.innerHTML = "";
+
+                        filas.forEach(fila => {
+                            const nuevaFila = document.createElement("tr");
+                            nuevaFila.innerHTML = `
+                                <td>${fila.nombre_alumno}</td>
+                                <td>${fila.nombre_curso}</td>
+                                <td>${fila.estado}</td>
+                                            `;
+                            const botonEliminar = document.createElement("button");
+                            botonEliminar.innerText = "Eliminar";
+                            botonEliminar.addEventListener("click", async () => {
+                                try {
+                                    const response = await fetch(`/deleteAlumno/${fila.nombre_alumno}`, {
+                                        method: "POST",
+                                    });
+
+                                    const text = await response.text(); // Muestra el contenido antes de parsear
+                                    console.log("Respuesta del servidor:", text);
+                                    const data = JSON.parse(text); // Intenta convertir a JSON
+
+                                    if (response.ok) {
+                                        alert(data.message); // Mostrar mensaje de éxito
+                                        botonEliminar.parentElement.remove(); // Eliminar fila de la tabla
+                                    } else {
+                                        alert(data.error); // Mostrar error si ocurre
+                                    }
+                                    location.reload();
+                                } catch (error) {
+                                    console.error("Error eliminando el alumno:", error);
+                                }
+                            });
+                            nuevaFila.appendChild(botonEliminar);
+                            cuerpoTabla.appendChild(nuevaFila);
+                        });
+                    })
+            } catch (error) {
+                console.error("Error obteniendo los cursos:", error);
+            }
+        });
+    </script>
 </body>
 
 </html>
