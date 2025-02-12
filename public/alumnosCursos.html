@@ -45,7 +45,7 @@
                                 <td>${fila.estado}</td>
                                             `;
                             const botonEliminar = document.createElement("button");
-                            botonEliminar.innerText = "Eliminar";
+                            botonEliminar.innerText = "Eliminar Alumno";
                             botonEliminar.addEventListener("click", async () => {
                                 try {
                                     const response = await fetch(`/deleteAlumno/${fila.nombre_alumno}`, {
