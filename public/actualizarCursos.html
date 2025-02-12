@@ -5,28 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actualizar Curso</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 400px;
-            margin: auto;
-            padding: 20px;
-        }
-
-        input,
-        select,
-        button {
-            display: block;
-            width: 100%;
-            margin: 10px 0;
-            padding: 8px;
-        }
-    </style>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-
-    <h2>Actualizar Curso</h2>
+    <nav class="menu-sticky">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="centros.html">Centros</a></li>
+            <li><a href="alumnosCursos.html">Alumnos Cursos</a></li>
+            <li><a href="actualizarCursos.html">Actualizar Cursos</a></li>
+            <li><a href="ratioAprobadosSuspensos.html">Mostrar Aprobados</a></li>
+        </ul>
+    </nav>
+    <br>
+    <h2 class="titulo-formulario">Actualizar Curso</h2>
+    
     <form id="formActualizarCurso">
         <label for="idCurso">Curso a modificar:</label>
         <select id="idCurso" name="idCurso" required>

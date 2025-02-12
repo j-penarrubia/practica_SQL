@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gráfico de Aprobados vs. Suspensos por Curso</title>
+    <!-- Incluye CanvasJS -->
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+    <nav class="menu-sticky">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="centros.html">Centros</a></li>
+            <li><a href="alumnosCursos.html">Alumnos Cursos</a></li>
+            <li><a href="actualizarCursos.html">Actualizar Cursos</a></li>
+            <li><a href="ratioAprobadosSuspensos.html">Mostrar Aprobados</a></li>
+        </ul>
+    </nav>
+
+    <div id="chartContainer"></div>
+
+    <script>
+        // 1. Llamar a la API para obtener los datos
+        fetch("/getAlumnosCursos")
+            .then(response => response.json())
+            .then(data => {
+
+                // 2. Agrupar los datos por curso y contar aprobados / suspensos
+                const groupedData = {};
+
+                data.forEach(item => {
+                    const curso = item.nombre_curso;
+                    const estado = item.estado;
+
+                    // Inicializar si no existe el curso
+                    if (!groupedData[curso]) {
+                        groupedData[curso] = { aprobado: 0, suspenso: 0 };
+                    }
+
+                    // Incrementar el contador según el estado
+                    if (estado === "aprobado") {
+                        groupedData[curso].aprobado++;
+                    } else if (estado === "suspenso") {
+                        groupedData[curso].suspenso++;
+                    }
+                });
+
+                // 3. Crear arrays para CanvasJS
+                const cursos = Object.keys(groupedData); // Array de nombres de curso
+                const dataPointsAprobados = [];
+                const dataPointsSuspensos = [];
+
+                cursos.forEach(curso => {
+                    dataPointsAprobados.push({
+                        label: curso,
+                        y: groupedData[curso].aprobado
+                    });
+                    dataPointsSuspensos.push({
+                        label: curso,
+                        y: groupedData[curso].suspenso
+                    });
+                });
+
+                // 4. Configurar y renderizar el gráfico
+                const chart = new CanvasJS.Chart("chartContainer", {
+                    animationEnabled: true,
+                    theme: "light2",
+                    title: {
+                        text: "Aprobados vs. Suspensos por Curso"
+                    },
+                    axisY: {
+                        title: "Número de Alumnos"
+                    },
+                    legend: {
+                        verticalAlign: "top"
+                    },
+                    data: [
+                        {
+                            type: "column",
+                            name: "Aprobados",
+                            showInLegend: true,
+                            dataPoints: dataPointsAprobados
+                        },
+                        {
+                            type: "column",
+                            name: "Suspensos",
+                            showInLegend: true,
+                            dataPoints: dataPointsSuspensos
+                        }
+                    ]
+                });
+
+                chart.render();
+            })
+            .catch(error => console.error("Error al obtener los datos:", error));
+    </script>
+</body>
+
+</html>

@@ -29,6 +29,10 @@ app.get("/actualizarCursos", async (req, res) => {
     res.sendFile(path.join(__dirname, "public", "actualizarCursos.html"));
 });
 
+app.get("/ratioAprobadosSuspensos", async (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "ratioAprobadosSuspensos.html"));
+});
+
 app.get("/getCursos", async (req, res) => {
     try {
         const [cursos] = await pool.query("SELECT * FROM cursos");

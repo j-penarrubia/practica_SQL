@@ -1,16 +1,16 @@
         body {
-            display: flex;
+            margin: 0;
+            /* Elimina margenes por defecto */
+            padding: 0;
+            /* Elimina paddings por defecto */
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
-            margin: 10px;
-            padding: 10px;
-            justify-content: center;
         }
 
         table {
             max-width: 80%;
             border-collapse: collapse 1px;
-            margin: 5%;
+            margin: 5% auto;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             background-color: white;
         }
@@ -29,13 +29,11 @@
 
         tr:nth-child(even) {
             background-color: #e8f5e9;
-            /* Verde claro suave */
         }
 
-        /* Estilo al pasar el mouse sobre cualquier fila */
+
         tr:hover {
             background-color: #c8e6c9;
-            /* Verde claro un poco más oscuro */
         }
 
         caption {
@@ -43,4 +41,128 @@
             margin-bottom: 10px;
             font-weight: bold;
             color: #333;
+        }
+
+        .menu-sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #333;
+            padding: 10px 0;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .menu-sticky ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu-sticky ul li {
+            margin: 0 15px;
+        }
+
+        .menu-sticky ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 10px 15px;
+            transition: 0.3s;
+        }
+
+        .menu-sticky ul li a:hover {
+            background-color: #555;
+            border-radius: 5px;
+        }
+
+        /* Espaciado para que el contenido no quede oculto bajo el menú */
+        .content {
+            margin-top: 60px;
+            /* Ajuste según el alto del menú */
+            padding: 20px;
+        }
+
+        /* Contenedor del formulario */
+        #formActualizarCurso {
+            max-width: 400px;
+            /* Ancho máximo del formulario */
+            margin: 50px auto;
+            /* Centra el formulario horizontalmente y da espacio vertical */
+            background-color: #f4f9f4;
+            /* Fondo ligeramente verde */
+            border: 1px solid #d2e4d2;
+            /* Borde suave */
+            border-radius: 8px;
+            /* Esquinas redondeadas */
+            padding: 20px;
+            /* Espacio interno */
+            box-shadow: 0 0 10px rgba(46, 125, 50, 0.1);
+            /* Sombra sutil */
+        }
+
+        /* Etiquetas (labels) */
+        #formActualizarCurso label {
+            display: block;
+            /* Cada label en su propia línea */
+            margin-top: 15px;
+            /* Separación superior */
+            color: #2e7d32;
+            /* Verde profesional */
+            font-weight: bold;
+        }
+
+        /* Campos de texto, fechas y selects */
+        #formActualizarCurso input[type="text"],
+        #formActualizarCurso input[type="date"],
+        #formActualizarCurso select {
+            width: 100%;
+            /* Ocupan todo el ancho */
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #c8dec8;
+            border-radius: 4px;
+            background-color: #fff;
+            box-sizing: border-box;
+            /* Evita desbordamientos de ancho */
+        }
+
+        /* Botón de envío */
+        #formActualizarCurso button[type="submit"] {
+            margin-top: 20px;
+            /* Separación respecto a los campos */
+            background-color: #4caf50;
+            /* Verde principal */
+            color: #fff;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        /* Efecto hover en el botón */
+        #formActualizarCurso button[type="submit"]:hover {
+            background-color: #43a047;
+            /* Verde más oscuro al pasar el mouse */
+        }
+
+        h2.titulo-formulario {
+            text-align: center;
+            color: #2e7d32;
+            /* Verde profesional */
+            margin-top: 50px;
+            /* Separación superior */
+            margin-bottom: 0;
+            /* Sin margen inferior */
+            font-weight: normal;
+            /* Si quieres que sea menos grueso */
+        }
+
+        #chartContainer {
+            margin: 10% auto;
+            height: 90%; 
+            width: 80%;
         }
