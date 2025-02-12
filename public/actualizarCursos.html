@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Curso</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        input,
+        select,
+        button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Actualizar Curso</h2>
+    <form id="formActualizarCurso">
+        <label for="idCurso">Curso a modificar:</label>
+        <select id="idCurso" name="idCurso" required>
+
+        </select>
+
+        <label for="nombre">Nuevo nombre prar el curso:</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Nuevo nombre del curso">
+
+        <label for="fechaImportacion">Nueva Fecha de Importación:</label>
+        <input type="date" id="fechaImportacion" name="fechaImportacion">
+
+        <label for="nivel">Nuevo nivel:</label>
+        <select id="nivel" name="nivel">
+            <option value="">-- Seleccionar Nivel --</option>
+            <option value="bajo">Bajo</option>
+            <option value="medio">Medio</option>
+            <option value="alto">Alto</option>
+        </select>
+
+        <label for="descripcion">Nueva descripción:</label>
+        <input type="text" id="descripcion" name="descripcion" placeholder="Nueva descripción">
+
+        <label for="lugar">Nuevo Centro:</label>
+        <select id="lugar" name="lugar">
+
+        </select>
+
+        <button type="submit">Actualizar Curso</button>
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async (event) => {
+            try {
+                fetch("/getCursos") // Llamada a la API
+                    .then(response => response.json())
+                    .then(cursos => {
+
+                        const selectorCurso = document.getElementById("idCurso");
+                        selectorCurso.innerHTML = "";
+
+                        cursos.forEach(curso => {
+                            const opcion = document.createElement("option");
+                            opcion.value = curso.idCurso;
+                            opcion.innerText = curso.nombre;
+                            selectorCurso.appendChild(opcion);
+                        });
+                    })
+            } catch (error) {
+                console.error("Error obteniendo los cursos:", error);
+            }
+            try {
+                fetch("/getCentros") // Llamada a la API
+                    .then(response => response.json())
+                    .then(centros => {
+
+                        const selectorCentro = document.getElementById("lugar");
+                        selectorCentro.innerHTML = "";
+
+                        centros.forEach(centro => {
+                            const opcion = document.createElement("option");
+                            opcion.value = centro.idCentro;
+                            opcion.innerText = centro.nombre;
+                            selectorCentro.appendChild(opcion);
+                        });
+                    })
+            } catch (error) {
+                console.error("Error obteniendo los centros:", error);
+            }
+        });
+
+        document.getElementById("formActualizarCurso").addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const idCurso = document.getElementById("idCurso").value;
+            const formData = new FormData(event.target);
+            const datos = Object.fromEntries(formData.entries()); // Convertir FormData a objeto JSON
+
+            // Eliminar campos vacíos para que no se envíen si no se modifican
+            Object.keys(datos).forEach(key => {
+                if (!datos[key]) delete datos[key];
+            });
+
+            if (Object.keys(datos).length <= 1) {
+                alert("Debes modificar al menos un campo.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`/updateCurso/${idCurso}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(datos)
+                });
+
+                const resultado = await response.json();
+                if (response.ok) {
+                    alert("Curso actualizado correctamente");
+                    location.reload();
+                } else {
+                    alert(`Error: ${resultado.error}`);
+                }
+            } catch (error) {
+                console.error("Error en la actualización:", error);
+                alert("Hubo un error al actualizar el curso.");
+            }
+
+        });
+    </script>
+
+</body>
+
+</html>

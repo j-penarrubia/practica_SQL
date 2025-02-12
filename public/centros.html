@@ -20,13 +20,38 @@
                     <th>Dirección</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="cuerpo-tabla">
 
             </tbody>
         </table>
     </main>
     <footer></footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", async (event) => {
+            try {
+                fetch("/getCentros") // Llamada a la API
+                    .then(response => response.json())
+                    .then(centros => {
 
+
+                        const cuerpoTabla = document.getElementById("cuerpo-tabla");
+                        cuerpoTabla.innerHTML = "";
+
+                        centros.forEach(centro => {
+                            const fila = document.createElement("tr");
+                            fila.innerHTML = `
+                                <td>${centro.idCentro}</td>
+                                <td>${centro.nombre}</td>
+                                <td>${centro.direccion}</td>
+                                            `;
+                            cuerpoTabla.appendChild(fila);
+                        });
+                    })
+            } catch (error) {
+                console.error("Error obteniendo los centros:", error);
+            }
+        })
+    </script>
 </body>
 
 </html>
