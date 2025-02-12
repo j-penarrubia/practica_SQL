@@ -1,0 +1,46 @@
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 10px;
+            padding: 10px;
+            justify-content: center;
+        }
+
+        table {
+            max-width: 80%;
+            border-collapse: collapse 1px;
+            margin: 5%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #e8f5e9;
+            /* Verde claro suave */
+        }
+
+        /* Estilo al pasar el mouse sobre cualquier fila */
+        tr:hover {
+            background-color: #c8e6c9;
+            /* Verde claro un poco más oscuro */
+        }
+
+        caption {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }

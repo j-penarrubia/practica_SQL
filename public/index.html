@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <header>
+
+    </header>
+    <main>
+        <table>
+            <caption>Cursos</caption>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Fecha Importación</th>
+                    <th>Nivel</th>
+                    <th>Descripción</th>
+                    <th>Lugar</th>
+                </tr>
+            </thead>
+            <tbody id="cuerpo-tabla">
+
+            </tbody>
+        </table>
+    </main>
+    <footer>
+
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", async (event) => {
+            try {
+                fetch("/getCursos") // Llamada a la API
+                    .then(response => response.json())
+                    .then(cursos => {
+
+
+                        const cuerpoTabla = document.getElementById("cuerpo-tabla");
+                        cuerpoTabla.innerHTML = "";
+
+                        cursos.forEach(curso => {
+                            const fila = document.createElement("tr");
+                            fila.innerHTML = `
+                                <td>${curso.idCurso}</td>
+                                <td>${curso.nombre}</td>
+                                <td>${new Date(curso.fechaImportacion).toLocaleDateString()}</td>
+                                <td>${curso.nivel}</td>
+                                <td>${curso.descripcion}</td>
+                                <td>${curso.lugar}</td>
+                                            `;
+                            cuerpoTabla.appendChild(fila);
+                        });
+                    })
+            } catch (error) {
+                console.error("Error obteniendo los cursos:", error);
+            }
+        });
+    </script>
+</body>
+
+</html>
